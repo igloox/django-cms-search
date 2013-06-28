@@ -94,7 +94,7 @@ def page_index_factory(language_code):
             base_qs = super(_PageIndex, self).index_queryset()
             result_qs = EmptyQuerySet()
             for site_obj in Site.objects.all():
-                qs = base_qs.published(site=site_obj.id).filter(
+                qs = base_qs.public().published(site=site_obj.id).filter(
                     Q(title_set__language=language_code) & (Q(title_set__redirect__exact='') | Q(title_set__redirect__isnull=True)))
                 if 'publisher' in settings.INSTALLED_APPS:
                     qs = qs.filter(publisher_is_draft=True)
